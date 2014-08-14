@@ -9,15 +9,32 @@ namespace Netinteractive\Utils;
 
 class Utils{
 	/**
-	 * @param $dir
+	 * @param $dir directory to
 	 * @param $extension
 	 * @param null $path
-	 * @param array $files
+	 * @param array $extra array of additional files
 	 * @return string
 	 */
-	static function glueFiles($dir, $extension, $path=null, array $files=array()){
+	static function glueFiles2($fromPath, $extension, $toPath, $withSubDirectories=true){
+		if(!is_array($fromPath)){
+			$fromPath=array($fromPath);
+		}
+		if(!is_array($extension)){
+			$extension=array($extension);
+		}
+
 		$text='';
-		$files=array_merge($files,self::scanDir($dir,$extension,true));
+		foreach($fromPath as $path){
+
+		}
+	}
+
+	static function glueFiles($dir, $extension, $path=null, array $extra=array()){
+		$text='';
+		if(!is_array($extension)){
+			$extension=array($extension);
+		}
+		$files=array_merge($extra,self::scanDir($dir,$extension,true));
 		$files=array_unique($files);
 		foreach($files as $file){
 			$text.=file_get_contents($file);
@@ -57,41 +74,54 @@ class Utils{
 	 * @param null $order
 	 * @return array
 	 */
-	static function scanDir($path, $filter = null, $scanSubDirs=false, $order = null){
+
+	static function scanDir($path, $type = array('f','d'), $scanSubDirs=false, $order = null){
+		if(!is_array($type)){
+			$type=array($type);
+		}
 		$path=str_replace('/',DIRECTORY_SEPARATOR,$path);
 		$dir = scandir($path, $order);
+
 		if($scanSubDirs && is_array($scanSubDirs)){
 			$result=$scanSubDirs;
 		}
 		else{
 			$result=array();
 		}
+
 		foreach ($dir as $item) {
 
 			if ($item == '.' || $item == '..') {
 				continue;
 			}
 
+			$add=false;
+
 			if(is_dir($path.$item)  && $scanSubDirs!==false){
-				$result=self::scanDir($path.$item.'/',$filter,$result,$order);
+				$result=self::scanDir($path.$item.'/',$type,$result,$order);
 			}
 
-			if ($filter == 'f' && !is_file($path.$item)) {
-				continue;
-			}
-			elseif ($filter == 'd' && !is_dir($path.$item)) {
-				continue;
-			}
-			elseif(strpos($filter,'.')===0 && strval(pathinfo($item, PATHINFO_EXTENSION))!=strval(self::subString($filter,1))){
-				continue;
+			if(is_file($path.$item)){
+
+				$extension=strval(pathinfo($item, PATHINFO_EXTENSION));
+				if(in_array('.'.$extension,$type) || in_array('f',$type)){
+					$add=true;
+				}
 			}
 
-			if($scanSubDirs===false){
-				$result[] = $item;
+			if(is_dir($path.$item) && in_array('d',$type)){
+				$add=true;
 			}
-			else{
-				$result[]=$path.$item;
+
+			if($add){
+				if($scanSubDirs===false){
+					$result[] = $item;
+				}
+				else{
+					$result[]=$path.$item;
+				}
 			}
+
 		}
 		return $result;
 	}
