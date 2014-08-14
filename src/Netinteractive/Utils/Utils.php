@@ -107,10 +107,10 @@ class Utils{
 	}
 
 	static function printR($v){
-		?><pre><?print_r($v)?></pre><?
+		?><pre><?php print_r($v)?></pre><?php
 	}
 
 	static function varDump($v){
-		?><pre><?var_dump($v)?></pre><?
+		?><pre><?php var_dump($v)?></pre><?php
 	}
 }
