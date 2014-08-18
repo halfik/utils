@@ -15,19 +15,6 @@ class Utils{
 	 * @param array $extra array of additional files
 	 * @return string
 	 */
-	static function glueFiles2($fromPath, $extension, $toPath, $withSubDirectories=true){
-		if(!is_array($fromPath)){
-			$fromPath=array($fromPath);
-		}
-		if(!is_array($extension)){
-			$extension=array($extension);
-		}
-
-		$text='';
-		foreach($fromPath as $path){
-
-		}
-	}
 
 	static function glueFiles($dir, $extension, $path=null, array $extra=array()){
 		$text='';
@@ -82,6 +69,7 @@ class Utils{
 		$path=str_replace('/',DIRECTORY_SEPARATOR,$path);
 		$dir = scandir($path, $order);
 
+
 		if($scanSubDirs && is_array($scanSubDirs)){
 			$result=$scanSubDirs;
 		}
@@ -97,19 +85,18 @@ class Utils{
 
 			$add=false;
 
-			if(is_dir($path.$item)  && $scanSubDirs!==false){
-				$result=self::scanDir($path.$item.'/',$type,$result,$order);
+			if(is_dir($path.DIRECTORY_SEPARATOR.$item)  && $scanSubDirs!==false){
+				$result=self::scanDir($path.DIRECTORY_SEPARATOR.$item,$type,$result,$order);
 			}
 
-			if(is_file($path.$item)){
-
+			if(is_file($path.DIRECTORY_SEPARATOR.$item)){
 				$extension=strval(pathinfo($item, PATHINFO_EXTENSION));
 				if(in_array('.'.$extension,$type) || in_array('f',$type)){
 					$add=true;
 				}
 			}
 
-			if(is_dir($path.$item) && in_array('d',$type)){
+			if(is_dir($path.DIRECTORY_SEPARATOR.$item) && in_array('d',$type)){
 				$add=true;
 			}
 
@@ -118,7 +105,7 @@ class Utils{
 					$result[] = $item;
 				}
 				else{
-					$result[]=$path.$item;
+					$result[]=$path.DIRECTORY_SEPARATOR.$item;
 				}
 			}
 
