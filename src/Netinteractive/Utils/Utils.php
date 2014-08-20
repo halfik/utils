@@ -1,5 +1,7 @@
 <?php
 namespace Netinteractive\Utils;
+use MyProject\Proxies\__CG__\OtherProject\Proxies\__CG__\stdClass;
+
 /**
  * Created by PhpStorm.
  * User: smike
@@ -129,5 +131,51 @@ class Utils{
 
 	static function varDump($v){
 		?><pre><?php var_dump($v)?></pre><?php
+	}
+
+	/**
+	 * @param $collection
+	 * @param $modelClass
+	 * @return array
+	 */
+	static function recordsToModels($collection, $modelClass){
+		$result=[];
+		foreach($collection as $record){
+			$result[]=self::arrayToModel($record, $modelClass);
+		}
+		return $result;
+	}
+
+	/**
+	 * @param $raw
+	 * @param $modelClass
+	 * @return mixed
+	 */
+	static function arrayToModel($raw, $modelClass){
+
+		$raw=(array) $raw;
+		$subRaw=array();
+		foreach($raw as $key=>$val){
+			if($key==ucfirst($key)){
+				$arrKey=explode('_',$key);
+				$subModelClass=array_shift($arrKey);
+				if(!isset($subRaw[$subModelClass])){
+					$subRaw[$subModelClass]=array();
+				}
+				$subRaw[$subModelClass][implode('_',$arrKey)]=$raw[$key];
+				unset($raw[$key]);
+			}
+		}
+
+		$Model=\App::make($modelClass);
+		$Model->fill($raw);
+
+		foreach($subRaw as $subModelClass=>$data){
+			$SubModel=\App::make($subModelClass);
+			$SubModel->fill($data);
+			$Model->$subModelClass=$SubModel;
+		}
+
+		return $Model;
 	}
 }
