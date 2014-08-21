@@ -1,5 +1,6 @@
 <?php
 namespace Netinteractive\Utils;
+use Illuminate\Support\Facades\View;
 use MyProject\Proxies\__CG__\OtherProject\Proxies\__CG__\stdClass;
 
 /**
@@ -177,5 +178,18 @@ class Utils{
 		}
 
 		return $Model;
+	}
+
+	/**
+	 * @param $ControllerAction
+	 * @param $view
+	 * @param array $params
+	 * @return \Illuminate\View\View
+	 */
+	public static function runPlugin($ControllerAction, $view, $params=array()){
+		$ControllerAction=explode('::',$ControllerAction);
+		$Controller=\App::make($ControllerAction[0]);
+		$result=\View::make($view,$Controller->$ControllerAction[1]($params));
+		return $result;
 	}
 }
