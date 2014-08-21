@@ -135,14 +135,58 @@ class Utils{
 	}
 
 	/**
+	 * @param $raw
+	 * @param null $rootClass
+	 * @return array|mixed|object
+	 */
+	static public function array2Model($raw, $rootClass=null){
+		$raw=(array)$raw;
+		$data=array();
+		$attributes=array();
+		$rootObject=array();
+		if($rootClass){
+			$rootObject=\App::make($rootClass);
+		}
+		foreach($raw as $key=>$val){
+			if($key==ucfirst($key)){
+				$arrKey=explode('_',$key);
+				$modelClass=array_shift($arrKey);
+				if(!isset($data[$modelClass])){
+					$data[$modelClass]=array();
+				}
+				$data[$modelClass][implode('_',$arrKey)]=$raw[$key];
+			}
+			else{
+				$attributes[$key]=$val;
+			}
+		}
+
+		if($rootClass){
+			$rootObject->fill($attributes);
+		}
+		else{
+			$rootObject=$attributes;
+			$rootObject=(object)$rootObject;
+		}
+		foreach($data as $modelClass=>$attr){
+			$Model=\App::make($modelClass);
+			$Model->fill($attr);
+			$rootObject->$modelClass=$Model;
+		}
+
+		return $rootObject;
+
+	}
+
+	/**
 	 * @param $collection
 	 * @param $modelClass
 	 * @return array
 	 */
-	static function recordsToModels($collection, $modelClass){
+	static function records2Models($collection, $modelClass=null){
 		$result=[];
 		foreach($collection as $record){
-			$result[]=self::arrayToModel($record, $modelClass);
+			$result[]=self::array2Model($record, $modelClass);
 		}
 		return $result;
 	}
@@ -152,7 +196,7 @@ class Utils{
 	 * @param $modelClass
 	 * @return mixed
 	 */
-	static function arrayToModel($raw, $modelClass){
+	/*static function arrayToModel($raw, $modelClass){
 
 		$raw=(array) $raw;
 		$subRaw=array();
@@ -178,7 +222,7 @@ class Utils{
 		}
 
 		return $Model;
-	}
+	}*/
 
 	/**
 	 * @param $ControllerAction
