@@ -143,10 +143,13 @@ class Utils{
 		$raw=(array)$raw;
 		$data=array();
 		$attributes=array();
-		$rootObject=array();
 		if($rootClass){
 			$rootObject=\App::make($rootClass);
 		}
+		else{
+			$rootObject=\App::make('stdClass');
+		}
+
 		foreach($raw as $key=>$val){
 			if($key==ucfirst($key)){
 				$arrKey=explode('_',$key);
@@ -161,12 +164,14 @@ class Utils{
 			}
 		}
 
+
 		if($rootClass){
 			$rootObject->fill($attributes);
 		}
 		else{
-			$rootObject=$attributes;
-			$rootObject=(object)$rootObject;
+			foreach($attributes as $k=>$v){
+				$rootObject->$k=$v;
+			}
 		}
 		foreach($data as $modelClass=>$attr){
 			$Model=\App::make($modelClass);
