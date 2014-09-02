@@ -235,10 +235,16 @@ class Utils{
 	 * @param array $params
 	 * @return \Illuminate\View\View
 	 */
-	public static function runPlugin($ControllerAction, $view, $params=array()){
+	public static function runPlugin($ControllerAction, $view=null, $params=array()){
 		$ControllerAction=explode('::',$ControllerAction);
 		$Controller=\App::make($ControllerAction[0]);
-		$result=\View::make($view,$Controller->$ControllerAction[1]($params));
+		if($view){
+			$result=\View::make($view,$Controller->$ControllerAction[1]($params));
+		}
+		else{
+			$result=$Controller->$ControllerAction[1]($params);
+		}
+
 		return $result;
 	}
 }
