@@ -247,4 +247,14 @@ class Utils{
 
 		return $result;
 	}
+
+	public function paramToArray($param){
+		if(!is_array($param)){
+			$param=explode(',',$param);
+			foreach($param as &$v){
+				$v=trim($v);
+			}
+		}
+		return $param;
+	}
 }
