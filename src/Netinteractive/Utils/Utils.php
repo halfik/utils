@@ -248,11 +248,15 @@ class Utils{
 		return $result;
 	}
 
-	public static function modelToInputs(\Elegant $Model, array $inputs=array()){
+	public static function modelToInputs(\Elegant $Model, array $inputs=array(), \Elegant $Record=null){
 		$fields=$Model->getFields();
 
 		foreach($inputs as $key=>&$input){
 			$field=$fields[$key];
+
+			if($field && $Record && !isset($input['value'])){
+				$input['value']=$Record->$key;
+			}
 
 			if(!isset($input['title'])){
 				$input['title']=$field['title'];
@@ -267,7 +271,7 @@ class Utils{
 					case 'text':
 					case 'html':
 						$input['type']='textarea';
-						break;
+					break;
 
 					case 'email':
 						$input['type']='email';
