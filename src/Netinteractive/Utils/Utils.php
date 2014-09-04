@@ -251,7 +251,7 @@ class Utils{
 	public static function modelToInputs(\Elegant $Model, array $inputs=array()){
 		$fields=$Model->getFields();
 
-		foreach($inputs as $key=>$input){
+		foreach($inputs as $key=>&$input){
 			$field=$fields[$key];
 
 			if(!isset($input['title'])){
