@@ -293,7 +293,7 @@ class Utils{
 		return $inputs;
 	}
 
-	public function paramToArray($param, $delimiter=','){
+	public static function paramToArray($param, $delimiter=','){
 		if(!is_array($param)){
 			$param=explode($delimiter,$param);
 			foreach($param as &$v){
