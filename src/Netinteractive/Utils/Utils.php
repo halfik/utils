@@ -248,7 +248,7 @@ class Utils{
 		return $result;
 	}
 
-	public function modelToInputs(\Elegant $Model, array $inputs=array()){
+	public static function modelToInputs(\Elegant $Model, array $inputs=array()){
 		$fields=$Model->getFields();
 
 		foreach($inputs as $key=>$input){
