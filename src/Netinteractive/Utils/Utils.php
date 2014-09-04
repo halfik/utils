@@ -248,9 +248,9 @@ class Utils{
 		return $result;
 	}
 
-	public function paramToArray($param){
+	public function paramToArray($param, $delimiter=','){
 		if(!is_array($param)){
-			$param=explode(',',$param);
+			$param=explode($delimiter,$param);
 			foreach($param as &$v){
 				$v=trim($v);
 			}
