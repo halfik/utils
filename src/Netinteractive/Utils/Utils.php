@@ -258,6 +258,10 @@ class Utils{
 				$input['title']=$field['title'];
 			}
 
+			if(!isset($input['name'])){
+				$input['name']=$key;
+			}
+
 			if(!isset($input['type'])){
 				switch($field['type']){
 					case 'text':
