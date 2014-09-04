@@ -248,6 +248,43 @@ class Utils{
 		return $result;
 	}
 
+	public function modelToInputs(\Elegant $Model, array $inputs=array()){
+		$fields=$Model->getFields();
+
+		foreach($inputs as $key=>$input){
+			$field=$fields[$key];
+
+			if(!isset($input['title'])){
+				$input['title']=$field['title'];
+			}
+
+			if(!isset($input['type'])){
+				switch($field['type']){
+					case 'text':
+					case 'html':
+						$input['type']='textarea';
+						break;
+
+					case 'email':
+						$input['type']='email';
+						break;
+
+					case 'bool':
+						$input['type']='checkbox';
+						break;
+
+					default:
+						$input['type']='text';
+						break;
+				}
+				if($key=='id'){
+					$input['type']='hidden';
+				}
+			}
+		}
+		return $inputs;
+	}
+
 	public function paramToArray($param, $delimiter=','){
 		if(!is_array($param)){
 			$param=explode($delimiter,$param);
