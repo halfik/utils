@@ -278,6 +278,8 @@ class Utils{
 				$input['name']=$key;
 			}
 
+
+
 			if(!isset($input['type'])){
 				switch($field['type']){
 					case 'text':
@@ -301,6 +303,23 @@ class Utils{
 					$input['type']='hidden';
 				}
 			}
+
+			if(!isset($input['class'])){
+				switch($field['type']){
+					case 'date':
+					case 'dateTime':
+						$input['class']='plg-ni_ui_dateBox form-control ';
+					break;
+
+					case 'html':
+						$input['class']='plg-ni_ui_editor form-control';
+					break;
+					default:
+						$input['class']='form-control';
+					break;
+				}
+			}
+
 		}
 		return $inputs;
 	}
