@@ -248,6 +248,18 @@ class Utils{
 		return $result;
 	}
 
+	public static function mergeArr($arr1, $arr2){
+		foreach($arr2 as $k=>$v){
+			if(is_array($v) && isset($arr1[$k]) && is_array($arr1[$k])){
+				$arr1[$k]=static::mergeArr($arr1[$k], $arr2[$k]);
+			}
+			else{
+				$arr1[$k]=$arr2[$k];
+			}
+		}
+		return $arr1;
+	}
+
 	public static function modelToInputs(\Elegant $Model, array $inputs=array(), \Elegant $Record=null){
 		$fields=$Model->getFields();
 
