@@ -293,11 +293,11 @@ class Utils{
 
 					case 'bool':
 						$input['type']='checkbox';
-						break;
+					break;
 
 					default:
 						$input['type']='text';
-						break;
+					break;
 				}
 				if($key=='id'){
 					$input['type']='hidden';
@@ -309,6 +309,11 @@ class Utils{
 					case 'date':
 					case 'dateTime':
 						$input['class']='plg-ni_ui_dateBox form-control ';
+					break;
+
+
+					case 'bool':
+						$input['class']='plg-ni_ui_checkbox form-control';
 					break;
 
 					case 'html':
