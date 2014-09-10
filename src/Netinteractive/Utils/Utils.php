@@ -1,5 +1,6 @@
 <?php
 namespace Netinteractive\Utils;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
 use MyProject\Proxies\__CG__\OtherProject\Proxies\__CG__\stdClass;
 
@@ -260,25 +261,28 @@ class Utils{
 		return $arr1;
 	}
 
+
 	public static function modelToInputs(\Elegant $Model, array $inputs=array(), \Elegant $Record=null){
 		$fields=$Model->getFields();
 
 		foreach($inputs as $key=>&$input){
-			$field=$fields[$key];
+			$field=array_get($fields,$key);
+
+			if(!array_get($input,'attr')){
+				$input['attr']=array();
+			}
 
 			if($field && $Record && !isset($input['value'])){
 				$input['value']=$Record->$key;
 			}
 
-			if(!isset($input['title'])){
-				$input['title']=$field['title'];
+			if(!isset($input['attr']['title'])){
+				$input['attr']['title']=$field['title'];
 			}
 
 			if(!isset($input['name'])){
 				$input['name']=$key;
 			}
-
-
 
 			if(!isset($input['type'])){
 				switch($field['type']){
@@ -304,26 +308,42 @@ class Utils{
 				}
 			}
 
-			if(!isset($input['class'])){
+			if(!isset($input['attr']['class'])){
 				switch($field['type']){
 					case 'date':
 					case 'dateTime':
-						$input['class']='plg-ni_ui_dateBox form-control ';
+						$input['attr']['class']='plg-ni_ui_dateBox form-control ';
 					break;
 
 
 					case 'bool':
-						$input['class']='plg-ni_ui_checkbox form-control';
+						$input['attr']['class']='plg-ni_ui_checkbox form-control';
 					break;
 
 					case 'html':
-						$input['class']='plg-ni_ui_editor form-control';
+						$input['attr']['class']='plg-ni_ui_editor form-control';
 					break;
 					default:
-						$input['class']='form-control';
+						$input['attr']['class']='form-control';
 					break;
 				}
 			}
+
+
+			switch($input['type']){
+				case 'checkbox':
+					$input['html']=\Form::checkbox($input['name'],null, array_get($input,'value'),$input['attr']);
+				break;
+
+				case 'select':
+					$input['html']=\Form::select($input['name'],$input['list'],array_get($input,'value'),$input['attr']);
+				break;
+
+				default:
+					$input['html']=\Form::input($input['type'],$input['name'],array_get($input,'value'),$input['attr']);
+				break;
+			}
+
 
 		}
 		return $inputs;
