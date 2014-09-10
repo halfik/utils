@@ -262,7 +262,7 @@ class Utils{
 	}
 
 
-	public static function modelToInputs(\Elegant $Model, array $inputs=array(), \Elegant $Record=null){
+	public static function modelToInputs(\Elegant $Model, array $inputs=array(), array $values=array()){
 		$fields=$Model->getFields();
 
 		foreach($inputs as $key=>&$input){
@@ -272,8 +272,8 @@ class Utils{
 				$input['attr']=array();
 			}
 
-			if($field && $Record && !isset($input['value'])){
-				$input['value']=$Record->$key;
+			if(array_get($values,$key)){
+				$input['value']=$values[$key];
 			}
 
 			if(!isset($input['attr']['title'])){
