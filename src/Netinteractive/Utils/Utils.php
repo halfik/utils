@@ -262,7 +262,7 @@ class Utils{
 	}
 
 
-	public static function modelToInputs(\Elegant $Model, array $inputs=array(), array $values=array()){
+	public static function modelToInputs(\Cartalyst\Sentry\Elegant $Model, array $inputs=array(), array $values=array()){
 		$fields=$Model->getFields();
 
 		foreach($inputs as $key=>&$input){
