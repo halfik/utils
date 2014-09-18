@@ -197,38 +197,7 @@ class Utils{
 		return $result;
 	}
 
-	/**
-	 * @param $raw
-	 * @param $modelClass
-	 * @return mixed
-	 */
-	/*static function arrayToModel($raw, $modelClass){
 
-		$raw=(array) $raw;
-		$subRaw=array();
-		foreach($raw as $key=>$val){
-			if($key==ucfirst($key)){
-				$arrKey=explode('_',$key);
-				$subModelClass=array_shift($arrKey);
-				if(!isset($subRaw[$subModelClass])){
-					$subRaw[$subModelClass]=array();
-				}
-				$subRaw[$subModelClass][implode('_',$arrKey)]=$raw[$key];
-				unset($raw[$key]);
-			}
-		}
-
-		$Model=\App::make($modelClass);
-		$Model->fill($raw);
-
-		foreach($subRaw as $subModelClass=>$data){
-			$SubModel=\App::make($subModelClass);
-			$SubModel->fill($data);
-			$Model->$subModelClass=$SubModel;
-		}
-
-		return $Model;
-	}*/
 
 	/**
 	 * @param $ControllerAction
@@ -337,6 +306,10 @@ class Utils{
 
 				case 'select':
 					$input['html']=\Form::select($input['name'],$input['list'],array_get($input,'value'),$input['attr']);
+				break;
+
+				case 'textarea':
+					$input['html']=\Form::textarea($input['name'],array_get($input,'value'),$input['attr']);
 				break;
 
 				default:
