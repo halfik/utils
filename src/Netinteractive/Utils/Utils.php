@@ -298,23 +298,24 @@ class Utils{
 				}
 			}
 
+			if (!array_get($input,'html')) {
+				switch ($input['type']) {
+					case 'checkbox':
+						$input['html'] = \Form::checkbox($input['name'], null, array_get($input, 'value'), $input['attr']);
+						break;
 
-			switch($input['type']){
-				case 'checkbox':
-					$input['html']=\Form::checkbox($input['name'],null, array_get($input,'value'),$input['attr']);
-				break;
+					case 'select':
+						$input['html'] = \Form::select($input['name'], $input['list'], array_get($input, 'value'), $input['attr']);
+						break;
 
-				case 'select':
-					$input['html']=\Form::select($input['name'],$input['list'],array_get($input,'value'),$input['attr']);
-				break;
+					case 'textarea':
+						$input['html'] = \Form::textarea($input['name'], array_get($input, 'value'), $input['attr']);
+						break;
 
-				case 'textarea':
-					$input['html']=\Form::textarea($input['name'],array_get($input,'value'),$input['attr']);
-				break;
-
-				default:
-					$input['html']=\Form::input($input['type'],$input['name'],array_get($input,'value'),$input['attr']);
-				break;
+					default:
+						$input['html'] = \Form::input($input['type'], $input['name'], array_get($input, 'value'), $input['attr']);
+						break;
+				}
 			}
 
 
