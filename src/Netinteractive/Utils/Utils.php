@@ -272,7 +272,7 @@ class Utils{
 						$input['type']='text';
 					break;
 				}
-				if($key=='id'){
+				if($key==$Model->getKeyName()){
 					$input['type']='hidden';
 				}
 			}
