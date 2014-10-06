@@ -241,7 +241,7 @@ class Utils{
 				$input['attr']=array();
 			}
 
-			if(isset($values[$key])){
+			if(isset($values[$key]) && !isset($input['value'])){
 				$input['value']=$values[$key];
 			}
 
