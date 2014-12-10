@@ -34,7 +34,7 @@ class UtilsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        App::bind('Utils', function($app)
+        \App::bind('Utils', function($app)
         {
             return new \Netinteractive\Utils\Utils;
         });
