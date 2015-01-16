@@ -334,7 +334,7 @@ class Utils
      * @param array $values
      * @return array
      */
-    public static function modelToInputs(\Elegant $Model, array $inputs = array(), array $values = array())
+    public static function modelToInputs(\Netinteractive\Elegant\Elegant $Model, array $inputs = array(), array $values = array())
     {
         $fields = $Model->getFields();
 
