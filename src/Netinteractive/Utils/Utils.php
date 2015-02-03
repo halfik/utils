@@ -53,30 +53,21 @@ class Utils
 
 
     /**
-     * Tworzy folder rekursywnie
+     * Tworzy folder rekursywnie, jezeli jeszcze nie istnieje
      * 
-     * @param $path
-     * @param int $perms
+     * @param $path sciezka folderu
+     * @param int $mode uprawnienia
      * @throws Exception
      */
-    static function makeDir($path, $perms = 0777)
+    static function makeDir($path, $mode = 0777)
     {
-        $path = str_replace('/', DIRECTORY_SEPARATOR, $path);
-        $arr = explode(DIRECTORY_SEPARATOR, $path);
-        $makePath = DIRECTORY_SEPARATOR;
-        foreach ($arr as $dir)
+        if(!file_exists($path))
         {
-            if ($dir)
-            {
-                $makePath.=DIRECTORY_SEPARATOR . $dir;
-                if (!is_dir($makePath))
-                {
-                    if (!mkdir($makePath, $perms))
-                    {
-                        throw new Exception("Can't make directory " . $makePath . "!");
-                    }
-                }
-            }
+            mkdir ($path, $mode, true);
+        }
+        elseif(!is_dir($path))
+        {
+            throw new Exception("File exists but isn't a directory(" . $path . ")!");
         }
     }
 
