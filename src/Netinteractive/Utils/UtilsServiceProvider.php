@@ -23,7 +23,7 @@ class UtilsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('netinteractive/utils');
+
     }
 
 
@@ -34,10 +34,7 @@ class UtilsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        \App::bind('Utils', function($app)
-        {
-            return new \Netinteractive\Utils\Utils;
-        });
+        \App::bind('Utils', '\Netinteractive\Utils\Utils;');
     }
 
 

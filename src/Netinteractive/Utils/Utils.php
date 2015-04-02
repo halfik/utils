@@ -189,6 +189,30 @@ class Utils
         return $result;
     }
 
+    /**
+     * Twory routa
+     *
+     * @param $controllerAction
+     * @param null $defaultView
+     * @param null $alias
+     * @return array
+     */
+    public static function makeRoute($controllerAction, $defaultView=null, $alias=null)
+    {
+
+        if(!$alias){
+            $alias=$controllerAction;
+        }
+
+        return array(
+            'as'=>$alias,
+            'uses'=>function()use($controllerAction, $defaultView){
+                return static::runAction($controllerAction,array_get(\Input::all(),'view',$defaultView),\Input::all());
+            }
+        );
+
+    }
+
 
 
     /**
