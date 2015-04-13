@@ -189,7 +189,7 @@ class Utils
 
     /**
      * Robi model z tablicy/std object
-     * 
+     *
      * @param $raw
      * @param null $rootClass
      * @return array|mixed|object
@@ -199,6 +199,8 @@ class Utils
         $raw = (array) $raw;
         $data = array();
         $attributes = array();
+
+
         if ($rootClass)
         {
             $rootObject = \App::make($rootClass);
@@ -229,6 +231,7 @@ class Utils
 
         if ($rootClass)
         {
+            $rootObject->fill($data[$rootClass]);
             $rootObject->fill($attributes);
         }
         else
@@ -240,9 +243,12 @@ class Utils
         }
         foreach ($data as $modelClass => $attr)
         {
-            $Model = \App::make($modelClass);
-            $Model->fill($attr);
-            $rootObject->$modelClass = $Model;
+            if($modelClass != $rootClass){
+                $Model = \App::make($modelClass);
+                $Model->fill($attr);
+                $rootObject->$modelClass = $Model;
+            }
+
         }
 
         return $rootObject;
