@@ -3,6 +3,9 @@ Netinteractive\Report
 
 ## Changelog
 
+### 1.0.6
+- poprawka buga w arrayToModel
+
 ### 1.0.5
 - poprawka buga w arrayToModel
 

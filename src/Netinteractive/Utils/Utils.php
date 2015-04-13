@@ -231,7 +231,9 @@ class Utils
 
         if ($rootClass)
         {
-            $rootObject->fill($data[$rootClass]);
+            if(isset($data[$rootClass])){
+                $rootObject->fill($data[$rootClass]);
+            }
             $rootObject->fill($attributes);
         }
         else
