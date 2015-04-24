@@ -3,6 +3,9 @@ Netinteractive\Report
 
 ## Changelog
 
+### 1.0.7
+- dodanie WriteCodeTrait, który może być używany wyłącznie w komendach (Command)
+
 ### 1.0.6
 - poprawka buga w arrayToModel
 
