@@ -164,13 +164,15 @@ class Utils
      * @param $controllerAction "Controller::akcja"
      * @param $view wskazany widok
      * @param array $params parametry do kontrolera
+     * @param string $layout layout
      * @return \Illuminate\View\View
      */
-    public static function runAction($controllerAction, $view = null, $params = array())
+    public static function runAction($controllerAction, $view = null, $params = array(), $layout=null)
     {
         #Tworzymy objekt controllera
         $controllerAction = str_replace('@', '::', $controllerAction);
         list($controller, $action)=explode('::', $controllerAction);
+        $controller=str_replace('.','\\',$controller);
 
         $controller='\\App\\Http\\Controllers\\'.$controller;
         #Jak niema takiego kontrollera
@@ -185,6 +187,10 @@ class Utils
             $result = \View::make($view, $controller->$action($params));
         } else {
             $result = $controller->$action($params);
+        }
+
+        if($layout){
+            $result = \View::make($layout, array('content'=>$result));
         }
 
         return $result;
