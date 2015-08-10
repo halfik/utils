@@ -3,6 +3,7 @@
 namespace Netinteractive\Utils;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 
 
 class UtilsServiceProvider extends ServiceProvider
@@ -33,8 +34,16 @@ class UtilsServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {
-        \App::bind('Utils', '\Netinteractive\Utils\Utils;');
+    {;
+        $this->app->bind('utils', function () {
+            return new Utils();
+        });
+
+        $this->app->booting(function()
+        {
+            AliasLoader::getInstance()->alias('Utils','Netinteractive\Utils\Facades\UtilsFacade');
+        });
+
     }
 
 

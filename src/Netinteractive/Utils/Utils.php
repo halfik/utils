@@ -61,7 +61,7 @@ class Utils
     /**
      * Skanowanie folderu z mozliwoscia podania filtrow, mozliwosc skanowania rekursywnego, mozliwosc wyboru sposobu sortowania
      *
-     * @param $path sciezka do foldeur
+     * @param string $path sciezka do foldeur
      * @param string $type f-only files, d-only directories. .gif only gif-files
      * @param bool $scanSubDirs czy ma skanowac rekursywie
      * @param null $order odwolanie do stalych z natywnego scandir()
