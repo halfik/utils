@@ -170,20 +170,21 @@ class Utils
     {
         #Tworzymy objekt controllera
         $controllerAction = str_replace('@', '::', $controllerAction);
-        $controllerAction = explode('::', $controllerAction);
+        list($controller, $action)=explode('::', $controllerAction);
 
+        $controller='\\App\\Http\\Controllers\\'.$controller;
         #Jak niema takiego kontrollera
-        if (!class_exists($controllerAction[0])) {
+        if (!class_exists($controller)) {
             return null;
         }
-        $controller = \App($controllerAction[0]);
+        $controller = \App($controller);
 
 
         #Jezeli jest wskazany widok
         if ($view) {
-            $result = \View::make($view, $controller->$controllerAction[1]($params));
+            $result = \View::make($view, $controller->$action($params));
         } else {
-            $result = $controller->$controllerAction[1]($params);
+            $result = $controller->$action($params);
         }
 
         return $result;
