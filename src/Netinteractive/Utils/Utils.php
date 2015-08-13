@@ -171,7 +171,9 @@ class Utils
     {
         #Tworzymy objekt controllera
         $controllerAction = str_replace('@', '::', $controllerAction);
-        list($controller, $action)=explode('::', $controllerAction);
+        $arr=explode('::', $controllerAction);
+        $controller=array_get($arr,0);
+        $action=array_get($arr,1);
         $controller=str_replace('.','\\',$controller);
 
         $controller='\\App\\Http\\Controllers\\'.$controller;
