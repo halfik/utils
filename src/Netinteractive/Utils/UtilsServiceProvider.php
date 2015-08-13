@@ -24,7 +24,7 @@ class UtilsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        include __DIR__.'/../../routes.php';
     }
 
 
@@ -35,7 +35,7 @@ class UtilsServiceProvider extends ServiceProvider
      */
     public function register()
     {;
-        $this->app->bind('utils', function () {
+        $this->app->bind('ni.utils', function () {
             return new Utils();
         });
 

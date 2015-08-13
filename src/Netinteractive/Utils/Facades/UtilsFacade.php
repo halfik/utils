@@ -4,6 +4,6 @@ use Illuminate\Support\Facades\Facade;
 
 class UtilsFacade extends Facade {
 
-    protected static function getFacadeAccessor() { return 'utils'; }
+    protected static function getFacadeAccessor() { return 'ni.utils'; }
 
 }
