@@ -167,28 +167,39 @@ class Utils
      * @param string $layout layout
      * @return \Illuminate\View\View
      */
-    public static function runAction($controllerAction, $view = null, $params = array(), $layout=null)
+    public static function runAction($controllerAction=null, $view = null, $params = array(), $layout=null)
     {
-        #Tworzymy objekt controllera
+
+        $controller=null;
+        $action=null;
         $controllerAction = str_replace('@', '::', $controllerAction);
-        $arr=explode('::', $controllerAction);
-        $controller=array_get($arr,0);
-        $action=array_get($arr,1);
-        $controller=str_replace('.','\\',$controller);
 
-        $controller='\\App\\Http\\Controllers\\'.$controller;
-        #Jak niema takiego kontrollera
-        if (!class_exists($controller)) {
-            return null;
+        //Jezeli jest wskazany kontroller i ackcja
+        if($controllerAction){
+            #Tworzymy objekt controllera
+            $arr=explode('::', $controllerAction);
+            $controller=array_get($arr,0);
+            $action=array_get($arr,1);
+            $controller=str_replace('.','\\',$controller);
+
+            $controller='\\App\\Http\\Controllers\\'.$controller;
+            #Jak niema takiego kontrollera
+            if (!class_exists($controller)) {
+                return null;
+            }
+            $controller = \App($controller);
         }
-        $controller = \App($controller);
 
+
+
+        $result=array();
+        if($controller){
+            $result=$controller->$action($params);
+        }
 
         #Jezeli jest wskazany widok
         if ($view) {
-            $result = \View::make($view, $controller->$action($params));
-        } else {
-            $result = $controller->$action($params);
+            $result = \View::make($view, $result);
         }
 
         if($layout){
