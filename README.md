@@ -1,6 +1,13 @@
-# Moduł Utils dla Laravel #
+Netinteractive\Utils
+====================
 
-## 1. Przykłady użycia: ##
+Narzedzia wspomagajace.
+
+
+## Changelog
+
+* 2.0.3 : 
+    * deleted: removed view create from Netinteractive\Utils::runAction
 
 
 ```

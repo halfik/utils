@@ -1,6 +1,4 @@
-<?php
-
-namespace Netinteractive\Utils;
+<?php namespace Netinteractive\Utils;
 
 /**
  * @category   Helpers
@@ -165,7 +163,7 @@ class Utils
      * @param $view wskazany widok
      * @param array $params parametry do kontrolera
      * @param string $layout layout
-     * @return \Illuminate\View\View
+     * @return mixed
      */
     public static function runAction($controllerAction=null, $view = null, $params = array(), $layout=null)
     {
@@ -187,23 +185,12 @@ class Utils
             if (!class_exists($controller)) {
                 return null;
             }
-            $controller = \App($controller);
+            $controller = \App::make($controller);
         }
-
-
 
         $result=array();
         if($controller){
             $result=$controller->$action($params);
-        }
-
-        #Jezeli jest wskazany widok
-        if ($view) {
-            $result = \View::make($view, $result);
-        }
-
-        if($layout){
-            $result = \View::make($layout, array('content'=>$result));
         }
 
         return $result;
