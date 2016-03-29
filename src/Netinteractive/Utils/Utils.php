@@ -160,12 +160,10 @@ class Utils
      * Uruchamia wskazany kontroler, laczy go z widokiem i przekazuje mu parametry
      *
      * @param $controllerAction "Controller::akcja"
-     * @param $view wskazany widok
      * @param array $params parametry do kontrolera
-     * @param string $layout layout
      * @return mixed
      */
-    public static function runAction($controllerAction=null, $view = null, $params = array(), $layout=null)
+    public static function runAction($controllerAction=null, $params = array())
     {
 
         $controller=null;
