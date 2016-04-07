@@ -1,11 +1,15 @@
 {
     "name": "netinteractive/utils",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "description": "Utils",
     "authors": [
         {
             "name": "Michal Shapowalow",
             "email": "michal.shapowalow@netinteractive.pl"
+        },
+        {
+            "name": "Piotr Pryga",
+            "email": "halfik@gmail.com"
         }
     ],
     "require": {

@@ -178,7 +178,7 @@ class Utils
             $action=array_get($arr,1);
             $controller=str_replace('.','\\',$controller);
 
-            $controller='\\App\\Http\\Controllers\\'.$controller;
+
             #Jak niema takiego kontrollera
             if (!class_exists($controller)) {
                 return null;
