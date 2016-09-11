@@ -1,6 +1,6 @@
 {
     "name": "netinteractive/utils",
-    "version": "2.0.5",
+    "version": "2.0.6",
     "description": "Utils",
     "authors": [
         {
@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "5.2.*"
+        "illuminate/support": ">=5.2.0"
     },
     "autoload": {
         "psr-0": {
